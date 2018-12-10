@@ -5,22 +5,20 @@ import java.math.BigInteger;
 import org.web3j.crypto.Credentials;
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.core.methods.response.TransactionReceipt;
+import org.web3j.protocol.exceptions.TransactionException;
 import org.web3j.protocol.http.HttpService;
 import org.web3j.tx.exceptions.ContractCallException;
 import org.web3j.tx.gas.ContractGasProvider;
 import org.web3j.tx.gas.StaticGasProvider;
 
 public class Web3JTest {
-	public final static String LOCAL_URL = "http://localhost:8545";
-	public final static String LOCAL_GAS_PRICE = "1";
-	public final static String LOCAL_GAS_LIMIT = "90000000000";
-	// public final static String KLAYTN_URL = "http://192.168.3.102:8551";
-	// public final static String KLAYTN_GAS_PRICE = "25000000000";
-	// public final static String KLAYTN_GAS_LIMIT = "20000000";
+	// public final static String NODE_URL = "http://localhost:8545";
+	// public final static String NODE_GAS_PRICE = "1";
+	// public final static String NODE_GAS_LIMIT = "90000000000";
+	public final static String NODE_URL = "http://192.168.3.102:8551";
+	public final static String NODE_GAS_PRICE = "25000000000";
+	public final static String NODE_GAS_LIMIT = "20000000";
 
-	public final static String NODE_URL = LOCAL_URL;
-	public final static String NODE_GAS_PRICE = LOCAL_GAS_PRICE;
-	public final static String NODE_GAS_LIMIT = LOCAL_GAS_LIMIT;
 	public final static ContractGasProvider GasProvider = new StaticGasProvider(new BigInteger(NODE_GAS_PRICE), new BigInteger(NODE_GAS_LIMIT));
 
 	public final static String PRIVATE_KEY = "0xf7cd72178207e94255c394f9fc1fc6387f6b6eb3776701fc6ec76c5429030fe9";
@@ -48,7 +46,7 @@ public class Web3JTest {
 			try {
 				System.out.println("Put 2 -> 500");
 				receipt = contract.put(BigInteger.valueOf(2), BigInteger.valueOf(500)).send();
-			} catch (RuntimeException e) {
+			} catch (RuntimeException | TransactionException e) {
 				System.out.println("Put 2 -> 500 is reverted");
 			}
 
